@@ -1,0 +1,47 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Exercício - GreenSystem</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="searchOption() == '0'">
+    <ion-searchbar
+      placeholder="Insira o titulo que deseja..."
+      animated
+      (ionChange)="buscar($event)"></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <ion-input placeholder="userId" #inputConsulta></ion-input>
+        </ion-col>
+        <ion-col>
+          <ion-button [routerLink]="['/consulta', inputConsulta.value]" [disabled]="valida.test(inputConsulta.value) || inputConsulta.value == ''">
+            Consultar registros
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center">
+    <div class="horizontal-cards">
+      <ion-card color="primary" *ngFor="let post of getPosts() | filter: textoBuscar: 'title'" [routerLink]="['/detalhes/', post.id]">
+        <ion-card-header>
+          <ion-card-title>{{ post.title }}</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          userId: {{ post.userId }}<br>
+          ID: {{ post.id }}<br>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

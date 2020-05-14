@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registros do userId {{ getId() }}</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="getId() <= 10 && getId() != 0 && searchOption() == '0'">
+    <ion-searchbar placeholder="Insira o titulo que deseja..." animated (ionChange)="buscar($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="getId() > 10 || getId() == 0">
+    Este ID não corresponde a nenhum usuário
+  </div>
+  <ion-card color="primary" [routerLink]="['/detalhes', post.id]" *ngFor="let post of getPosts() | filter: textoBuscar: 'title'">
+    <ion-card-header>
+      <ion-card-title>{{ post.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      UserId {{ post.userId }}<br>
+      ID {{ post.id }}<br>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
